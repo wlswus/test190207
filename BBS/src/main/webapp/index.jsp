@@ -15,7 +15,7 @@
 		<img src="./resources/images/bear.gif"><br>
 		<font size=7 color=blue family="Comic Sans MS">
 		 <b>
-		 	Index....Waiting...
+		 	BBS... wating...
 		 </b>
 		</font>
 	</div>
