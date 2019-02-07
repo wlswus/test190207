@@ -10,7 +10,7 @@
 </head>
 <body>
  <div align="center">
-	 <img src="images/test.gif" width=350 height=150> <br>
+	 <img src="images/test2.gif" width=350 height=150> <br>
 	 <font color=blue>Waiting...Loading...</font>     
  </div>	
 </body>
