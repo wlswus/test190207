@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bbs_reply">
+	
+	<insert id="add" parameterType="net.hb.bbs.reply.ReplyDTO">
+		insert into bbsreply
+		values( bbsreply_seq.nextVal, #{br_id}, #{br_content}, sysdate, #{b_no})     
+	</insert>
+	
+	<select id="selectAll" parameterType="int" resultType="net.hb.bbs.reply.ReplyDTO">
+	  select rownum rrn, br.* from bbsreply br 
+	  where b_no = #{b_no} order by br_no
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="net.hb.bbs.reply.ReplyDTO">
+		select * from bbsreply where br_no = #{br_no}
+	</select>
+	
+	<delete id="del" parameterType="int">
+	  delete from bbsreply where br_no = #{br_no}
+	</delete>
+	
+	<update id="edit" parameterType="net.hb.bbs.reply.ReplyDTO">
+		update bbsreply set br_id=#{br_id}, br_content=#{br_content}
+		where br_no = #{br_no}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

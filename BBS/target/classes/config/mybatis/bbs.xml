@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bbs">	
+
+	<insert id="add" parameterType="net.hb.bbs.bbsDTO">
+		insert into bbs(b_no,b_id,b_name,b_title,b_content,b_date,b_file_name)
+		values(bbs_seq.nextval, #{b_id}, #{b_name}, #{b_title}, #{b_content}, SYSDATE, #{b_file_name})
+	</insert>
+	
+	<select id="selectAll2" resultType="net.hb.bbs.bbsDTO">
+		select * from (
+  		select rownum rn, b.* from bbs b
+  		) order by b_date desc
+	</select>
+	
+	<select id="selectAll" resultType="net.hb.bbs.bbsDTO">
+		select * from (
+  		select rownum rn, b.* from bbs b
+  		) where rn between #{start} and #{end} order by rn desc
+	</select>
+	
+	<select id="selectAllDynamic"  resultType="net.hb.bbs.bbsDTO">
+		select * from (
+		select  rownum rn, b.* from (
+		select * from bbs 
+		
+		<if test="skey != null">
+			<if test="skey == 'b_name'">
+				where b_name like '%' || #{sval} || '%'
+			</if>
+			<if test="skey == 'b_title'">
+				where b_title like '%' || #{sval} || '%'
+			</if>
+			<if test="skey == 'b_content'">
+				where b_content like '%' || #{sval} || '%'
+			</if>
+		</if>
+			order by b_date asc
+		  ) b
+	   ) where rn between #{start} and #{end} order by rn desc
+	</select>
+	
+	<select id="countAll" resultType="int">
+	     select count(*)  from bbs 
+	</select>
+	
+	<select id="countAllSearch" resultType="int" parameterType="net.hb.bbs.bbsDTO">
+      select count(*) from bbs
+      where ${skey} like '%' || #{sval} || '%'
+   </select>
+	
+	<select id="detail" parameterType="int" resultType="net.hb.bbs.bbsDTO">
+		select * from bbs where b_no = #{b_no}
+	</select>
+	
+	<update id="edit" parameterType="net.hb.bbs.bbsDTO">
+		update bbs set b_name=#{b_name}, b_title=#{b_title}, b_content=#{b_content}, 
+		b_file_name=#{b_file_name} where b_no=#{b_no}
+	</update>
+	
+	<delete id="del" parameterType="int">
+		delete from bbs where b_no = #{b_no}
+	</delete>
+</mapper>
